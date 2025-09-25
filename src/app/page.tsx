@@ -97,7 +97,6 @@ export default function WorkersPage() {
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-10 flex justify-center">
           <Pagination
