@@ -36,7 +36,6 @@ export default function Pagination({
       <div className="flex items-center gap-2 bg-white rounded-2xl shadow-md px-2 py-2 
         overflow-x-auto sm:overflow-visible flex-wrap sm:flex-nowrap">
         
-        {/* Left Arrow */}
         <button
           onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
           className="px-3 sm:px-4 py-1 sm:py-2 rounded-full bg-gray-200 hover:bg-gray-300 
@@ -45,7 +44,6 @@ export default function Pagination({
           &larr;
         </button>
 
-        {/* Page Numbers */}
         {visiblePages.map((page, index) =>
           page === '...' ? (
             <span
@@ -69,7 +67,6 @@ export default function Pagination({
           )
         )}
 
-        {/* Right Arrow */}
         <button
           onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
           className="px-3 sm:px-4 py-1 sm:py-2 rounded-full bg-gray-200 hover:bg-gray-300 
