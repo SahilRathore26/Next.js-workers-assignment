@@ -15,10 +15,8 @@ export default function WorkersPage() {
   const [priceFilter, setPriceFilter] = useState<number | ''>('')
   const [serviceFilter, setServiceFilter] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-
   const itemsPerPage = 9
 
-  // Define the expected response type
   interface FetchWorkersResponse {
     success: boolean
     data: WorkerType[]
@@ -28,13 +26,11 @@ export default function WorkersPage() {
     const fetchWorkers = async () => {
       try {
         const res = await fetch('/api/workers')
-        // Disable ESLint rule for this line to avoid `any` error
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const result: FetchWorkersResponse = await res.json()
         if (!result.success) throw new Error('Failed to fetch')
         setWorkersData(result.data)
-      } catch (err: unknown) {
-        console.error(err)
+      } catch (err) {
+        console.log(err)
         setError(true)
       } finally {
         setLoading(false)
@@ -51,7 +47,7 @@ export default function WorkersPage() {
   const filteredWorkers = useMemo(() => {
     return workersData
       .filter((w) => w.pricePerDay > 0 && w.id !== null)
-      .filter((w) => (priceFilter !== '' ? w.pricePerDay <= Number(priceFilter) : true))
+      .filter((w) => (priceFilter !== '' ? w.pricePerDay <= priceFilter : true))
       .filter((w) => (serviceFilter ? w.service === serviceFilter : true))
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [workersData, priceFilter, serviceFilter])
@@ -84,7 +80,6 @@ export default function WorkersPage() {
         Our Workers
       </h1>
 
-      {/* Filter Panel */}
       <div className="mb-8">
         <FilterPanel
           priceFilter={priceFilter}
@@ -95,7 +90,6 @@ export default function WorkersPage() {
         />
       </div>
 
-      {/* Worker Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {displayedWorkers.length ? (
           displayedWorkers.map((worker) => (
@@ -108,7 +102,6 @@ export default function WorkersPage() {
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-10 flex justify-center">
           <Pagination
