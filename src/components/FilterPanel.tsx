@@ -19,7 +19,6 @@ export default function FilterPanel({
 }: FilterPanelProps) {
   return (
     <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4 bg-white p-4 rounded-lg shadow-sm">
-      {/* Price Filter */}
       <div className="flex items-center gap-2">
         <label className="font-medium">Price/day:</label>
         <input
@@ -34,7 +33,6 @@ export default function FilterPanel({
         />
       </div>
 
-      {/* Service Filter */}
       <div className="flex items-center gap-2">
         <label className="font-medium">Service:</label>
         <select

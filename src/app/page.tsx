@@ -24,14 +24,7 @@ export default function WorkersPage() {
         const res = await fetch('/api/workers')
         const result = await res.json()
         if (!result.success) throw new Error('Failed to fetch')
-
-        // ✅ Ensure pricePerDay is a number
-        const normalizedData = result.data.map((w: any) => ({
-          ...w,
-          pricePerDay: Number(w.pricePerDay) || 0,
-        }))
-
-        setWorkersData(normalizedData)
+        setWorkersData(result.data)
       } catch (err) {
         console.log(err)
         setError(true)
@@ -49,9 +42,8 @@ export default function WorkersPage() {
 
   const filteredWorkers = useMemo(() => {
     return workersData
-      .filter((w) => w.id !== null && w.pricePerDay > 0)
-      // ✅ Correct price filter
-      .filter((w) => (priceFilter !== '' ? w.pricePerDay <= priceFilter : true))
+      .filter((w) => w.pricePerDay > 0 && w.id !== null)
+      .filter((w) => (priceFilter !== '' ? w.pricePerDay <= Number(priceFilter) : true))
       .filter((w) => (serviceFilter ? w.service === serviceFilter : true))
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [workersData, priceFilter, serviceFilter])
@@ -64,7 +56,7 @@ export default function WorkersPage() {
 
   if (loading)
     return (
-      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="mx-12 my-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {Array.from({ length: itemsPerPage }).map((_, index) => (
           <Shimmer key={index} />
         ))}
@@ -79,22 +71,22 @@ export default function WorkersPage() {
     )
 
   return (
-    <main className="w-full min-h-screen bg-gray-50 px-4 py-12">
+    <main className="container mx-auto px-4 py-12 bg-gray-50 min-h-screen">
       <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">
         Our Workers
       </h1>
 
-      {/* Filter Panel */}
-      <FilterPanel
-        priceFilter={priceFilter}
-        setPriceFilter={setPriceFilter}
-        serviceFilter={serviceFilter}
-        setServiceFilter={setServiceFilter}
-        services={services}
-      />
+      <div className="mb-8">
+        <FilterPanel
+          priceFilter={priceFilter}
+          setPriceFilter={setPriceFilter}
+          serviceFilter={serviceFilter}
+          setServiceFilter={setServiceFilter}
+          services={services}
+        />
+      </div>
 
-      {/* Worker Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {displayedWorkers.length ? (
           displayedWorkers.map((worker) => (
             <WorkerCard key={worker.id} worker={worker} />
@@ -106,9 +98,8 @@ export default function WorkersPage() {
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="mt-10 flex justify-center overflow-x-auto">
+        <div className="mt-10 flex justify-center">
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}

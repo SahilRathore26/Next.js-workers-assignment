@@ -4,7 +4,6 @@ import Image from 'next/image'
 export default function WorkerCard({ worker }: { worker: WorkerType }) {
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-300 cursor-pointer">
-      {/* Worker Image with Gradient Overlay */}
       <div className="relative w-full h-60 md:h-52 lg:h-60 group overflow-hidden">
         <Image
           src={worker.image || '/placeholder.jpg'}
@@ -15,8 +14,6 @@ export default function WorkerCard({ worker }: { worker: WorkerType }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
       </div>
-
-      {/* Worker Info */}
       <div className="p-6 flex flex-col justify-between h-48">
         <div>
           <h2 className="text-lg md:text-xl font-bold text-gray-900 truncate">
@@ -29,8 +26,6 @@ export default function WorkerCard({ worker }: { worker: WorkerType }) {
           <p className="font-semibold text-gray-800 text-sm md:text-base">
             ₹{Math.round(worker.pricePerDay * 1.18)} / day
           </p>
-
-          {/* Badge */}
           <span className="px-3 py-1 text-xs md:text-sm font-semibold text-white bg-blue-500 rounded-full shadow-md">
             Available
           </span>
