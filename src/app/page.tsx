@@ -18,11 +18,16 @@ export default function WorkersPage() {
 
   const itemsPerPage = 9
 
+  interface FetchWorkersResponse {
+  success: boolean
+  data: WorkerType[]
+}
+
   useEffect(() => {
     const fetchWorkers = async () => {
       try {
         const res = await fetch('/api/workers')
-        const result = await res.json()
+        const result: FetchWorkersResponse = await res.json()
         if (!result.success) throw new Error('Failed to fetch')
         setWorkersData(result.data)
       } catch (err) {
