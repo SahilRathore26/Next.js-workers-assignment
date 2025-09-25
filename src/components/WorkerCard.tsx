@@ -4,12 +4,13 @@ import Image from 'next/image'
 export default function WorkerCard({ worker }: { worker: WorkerType }) {
   return (
     <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-300 cursor-pointer">
-      <div className="relative w-full h-60 md:h-52 lg:h-60 group overflow-hidden">
+      <div className="w-full h-60 md:h-52 lg:h-60 relative overflow-hidden">
         <Image
           src={worker.image || '/placeholder.jpg'}
           alt={worker.name}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          width={500}
+          height={500}
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
@@ -19,7 +20,9 @@ export default function WorkerCard({ worker }: { worker: WorkerType }) {
           <h2 className="text-lg md:text-xl font-bold text-gray-900 truncate">
             {worker.name}
           </h2>
-          <p className="text-gray-600 mt-2 text-sm md:text-base truncate">{worker.service}</p>
+          <p className="text-gray-600 mt-2 text-sm md:text-base truncate">
+            {worker.service}
+          </p>
         </div>
 
         <div className="mt-4 flex items-center justify-between">
