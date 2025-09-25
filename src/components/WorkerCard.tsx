@@ -10,7 +10,7 @@ export default function WorkerCard({ worker }: { worker: WorkerType }) {
           src={worker.image || '/placeholder.jpg'}
           alt={worker.name}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          className="object-fill transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
