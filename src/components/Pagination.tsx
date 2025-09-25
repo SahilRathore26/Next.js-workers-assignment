@@ -32,40 +32,44 @@ export default function Pagination({
   }, [currentPage, totalPages])
 
   return (
-    <div className="flex justify-center mt-8">
-      <div className="flex items-center gap-2 bg-white rounded-lg shadow px-3 py-2 overflow-x-auto">
+    <div className="flex justify-center mt-6">
+      <div className="flex items-center gap-2 bg-white rounded-2xl shadow-md px-3 py-2 overflow-x-auto">
         {/* Left Arrow */}
         <button
           onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-          className="px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 font-medium transition-colors"
+          className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold transition-transform duration-200 hover:scale-110"
         >
           &larr;
         </button>
 
         {/* Page Numbers */}
-        {visiblePages.map((page, index) => (
-          <span key={index}>
-            {page === '...' ? (
-              <span className="px-3 py-1 text-gray-500 font-medium">...</span>
-            ) : (
-              <button
-                onClick={() => setCurrentPage(Number(page))}
-                className={`px-3 py-1 rounded-md font-medium transition-colors duration-200 ${
-                  page === currentPage
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-                }`}
-              >
-                {page}
-              </button>
-            )}
-          </span>
-        ))}
+        {visiblePages.map((page, index) =>
+          page === '...' ? (
+            <span
+              key={index}
+              className="px-3 py-1 text-gray-400 font-medium select-none"
+            >
+              ...
+            </span>
+          ) : (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(Number(page))}
+              className={`px-4 py-2 rounded-full font-medium transition-colors duration-200 ${
+                page === currentPage
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+              }`}
+            >
+              {page}
+            </button>
+          )
+        )}
 
         {/* Right Arrow */}
         <button
           onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-          className="px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 font-medium transition-colors"
+          className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold transition-transform duration-200 hover:scale-110"
         >
           &rarr;
         </button>
