@@ -18,20 +18,23 @@ export default function WorkersPage() {
 
   const itemsPerPage = 9
 
+  // Define the expected response type
   interface FetchWorkersResponse {
-  success: boolean
-  data: WorkerType[]
-}
+    success: boolean
+    data: WorkerType[]
+  }
 
   useEffect(() => {
     const fetchWorkers = async () => {
       try {
         const res = await fetch('/api/workers')
+        // Disable ESLint rule for this line to avoid `any` error
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const result: FetchWorkersResponse = await res.json()
         if (!result.success) throw new Error('Failed to fetch')
         setWorkersData(result.data)
-      } catch (err) {
-        console.log(err)
+      } catch (err: unknown) {
+        console.error(err)
         setError(true)
       } finally {
         setLoading(false)
@@ -81,6 +84,7 @@ export default function WorkersPage() {
         Our Workers
       </h1>
 
+      {/* Filter Panel */}
       <div className="mb-8">
         <FilterPanel
           priceFilter={priceFilter}
@@ -91,6 +95,7 @@ export default function WorkersPage() {
         />
       </div>
 
+      {/* Worker Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {displayedWorkers.length ? (
           displayedWorkers.map((worker) => (
@@ -103,6 +108,7 @@ export default function WorkersPage() {
         )}
       </div>
 
+      {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-10 flex justify-center">
           <Pagination
