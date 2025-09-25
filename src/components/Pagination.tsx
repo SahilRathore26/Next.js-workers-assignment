@@ -32,12 +32,15 @@ export default function Pagination({
   }, [currentPage, totalPages])
 
   return (
-    <div className="flex justify-center mt-6">
-      <div className="flex items-center gap-2 bg-white rounded-2xl shadow-md px-3 py-2 overflow-x-auto">
+    <div className="flex justify-center mt-6 w-full px-2">
+      <div className="flex items-center gap-2 bg-white rounded-2xl shadow-md px-2 py-2 
+        overflow-x-auto sm:overflow-visible flex-wrap sm:flex-nowrap">
+        
         {/* Left Arrow */}
         <button
           onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-          className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold transition-transform duration-200 hover:scale-110"
+          className="px-3 sm:px-4 py-1 sm:py-2 rounded-full bg-gray-200 hover:bg-gray-300 
+            text-gray-700 text-sm sm:text-base font-semibold transition-transform duration-200 hover:scale-110"
         >
           &larr;
         </button>
@@ -47,7 +50,7 @@ export default function Pagination({
           page === '...' ? (
             <span
               key={index}
-              className="px-3 py-1 text-gray-400 font-medium select-none"
+              className="px-2 sm:px-3 py-1 text-gray-400 text-sm sm:text-base font-medium select-none"
             >
               ...
             </span>
@@ -55,7 +58,7 @@ export default function Pagination({
             <button
               key={index}
               onClick={() => setCurrentPage(Number(page))}
-              className={`px-4 py-2 rounded-full font-medium transition-colors duration-200 ${
+              className={`px-3 sm:px-4 py-1 sm:py-2 rounded-full font-medium text-sm sm:text-base transition-colors duration-200 ${
                 page === currentPage
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
@@ -69,11 +72,13 @@ export default function Pagination({
         {/* Right Arrow */}
         <button
           onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-          className="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold transition-transform duration-200 hover:scale-110"
+          className="px-3 sm:px-4 py-1 sm:py-2 rounded-full bg-gray-200 hover:bg-gray-300 
+            text-gray-700 text-sm sm:text-base font-semibold transition-transform duration-200 hover:scale-110"
         >
           &rarr;
         </button>
       </div>
     </div>
+
   )
 }
