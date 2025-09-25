@@ -39,7 +39,6 @@ export default function WorkersPage() {
     return Array.from(new Set(workersData.map((w) => w.service)))
   }, [workersData])
 
-  // ✅ Fix filters properly
   const filteredWorkers = useMemo(() => {
     return workersData
       .filter((w) => w.pricePerDay > 0 && w.id !== null)
@@ -56,51 +55,57 @@ export default function WorkersPage() {
 
   if (loading)
     return (
-      <div className="p-6 text-center text-gray-700">Loading workers...</div>
+      <div className="flex justify-center items-center min-h-screen text-gray-700 text-lg">
+        Loading workers...
+      </div>
     )
 
   if (error)
     return (
-      <div className="p-6 text-center text-red-500">Failed to load workers.</div>
+      <div className="flex justify-center items-center min-h-screen text-red-500 text-lg">
+        Failed to load workers.
+      </div>
     )
 
   return (
-    <main className="container mx-auto px-4 py-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
+    <main className="container mx-auto px-4 py-12 bg-gray-50 min-h-screen">
+      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">
         Our Workers
       </h1>
 
       {/* Filter Panel */}
-      <FilterPanel
-        priceFilter={priceFilter}
-        setPriceFilter={setPriceFilter}
-        serviceFilter={serviceFilter}
-        setServiceFilter={setServiceFilter}
-        services={services}
-      />
+      <div className="mb-8">
+        <FilterPanel
+          priceFilter={priceFilter}
+          setPriceFilter={setPriceFilter}
+          serviceFilter={serviceFilter}
+          setServiceFilter={setServiceFilter}
+          services={services}
+        />
+      </div>
 
       {/* Worker Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {displayedWorkers.length ? (
           displayedWorkers.map((worker) => (
             <WorkerCard key={worker.id} worker={worker} />
           ))
         ) : (
-          <p className="text-center text-gray-500 col-span-full">
+          <p className="text-center text-gray-500 col-span-full text-lg mt-12">
             No workers match your filters.
           </p>
         )}
       </div>
 
-      {/* Pagination */}
       {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
-  )}
-
+        <div className="mt-10 flex justify-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      )}
     </main>
   )
 }
