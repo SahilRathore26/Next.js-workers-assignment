@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from 'react'
 import WorkerCard from '@/components/WorkerCard'
 import FilterPanel from '@/components/FilterPanel'
 import Pagination from '@/components/Pagination'
+import Shimmer from '@/components/Shimmer'
 
 export default function WorkersPage() {
   const [workersData, setWorkersData] = useState<WorkerType[]>([])
@@ -55,8 +56,10 @@ export default function WorkersPage() {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center min-h-screen text-gray-700 text-lg">
-        Loading workers...
+      <div className="mx-10 my-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {Array.from({ length: itemsPerPage }).map((_, index) => (
+          <Shimmer key={index} />
+        ))}
       </div>
     )
 
